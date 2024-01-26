@@ -29,19 +29,19 @@ export default class Address {
   }
 
   private validate() {
-    if (this._street.length === 0) {
+    if (!this._street || this._street.length === 0) {
       throw new Error('Street is required');
     }
 
-    if (this._number <= 0) {
+    if (!this._number || this._number <= 0) {
       throw new Error('Number must be greater then 0');
     }
 
-    if (this._zipcode.length === 0) {
+    if (!this._zipcode || this._zipcode.length === 0) {
       throw new Error('Zipcode is required');
     }
 
-    if (this._city.length === 0) {
+    if (!this._city || this._city.length === 0) {
       throw new Error('City is required');
     }
   }

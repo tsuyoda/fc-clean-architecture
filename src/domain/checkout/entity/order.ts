@@ -37,15 +37,15 @@ export default class Order {
   }
 
   private validate(): void {
-    if (this._id.length === 0) {
+    if (!this._id || this._id.length === 0) {
       throw new Error('Id is required');
     }
 
-    if (this._customerId.length === 0) {
+    if (!this._customerId || this._customerId.length === 0) {
       throw new Error('CustomerId is required');
     }
 
-    if (this._items.length === 0) {
+    if (!this._items || this._items.length === 0) {
       throw new Error('At least 1 item is required');
     }
   }

@@ -46,23 +46,23 @@ export default class OrderItem {
   }
 
   private validate() {
-    if (this._id.length === 0) {
+    if (!this._id || this._id.length === 0) {
       throw new Error('Id is required');
     }
 
-    if (this._name.length === 0) {
+    if (!this.name || this._name.length === 0) {
       throw new Error('Name is required');
     }
 
-    if (this._productId.length === 0) {
+    if (!this.productId || this._productId.length === 0) {
       throw new Error('ProductId is required');
     }
 
-    if (this._unitPrice < 0) {
+    if (!this._unitPrice || this._unitPrice < 0) {
       throw new Error('UnitPrice must be greater or equal than 0');
     }
 
-    if (this._quantity <= 0) {
+    if (!this._quantity || this._quantity <= 0) {
       throw new Error('Quantity must be greater than 0');
     }
   }
