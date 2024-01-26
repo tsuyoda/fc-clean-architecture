@@ -1,6 +1,3 @@
-import { EVENTS } from '../constants/events';
-import FirstConsoleWhenCustomerIsCreatedHandler from '../event/handler/firstConsoleWhenCustomerIsCreated.handler';
-import SecondConsoleWhenCustomerIsCreatedHandler from '../event/handler/secondConsoleWhenCustomerIsCreated.handler';
 import Address from '../valueObject/address';
 import Customer from './customer';
 
@@ -8,13 +5,19 @@ describe('Customer unit tests', () => {
   it('should throw error when id is empty', () => {
     expect(() => {
       new Customer('', 'Customer Name');
-    }).toThrow('Id is required');
+    }).toThrow('Customer: Id is required');
   });
 
   it('should throw error when name is empty', () => {
     expect(() => {
       new Customer('i1', '');
-    }).toThrow('Name is required');
+    }).toThrow('Customer: Name is required');
+  });
+
+  it('should throw error when name and id empty', () => {
+    expect(() => {
+      new Customer('', '');
+    }).toThrow('Customer: Id is required,Customer: Name is required');
   });
 
   it('should change customer name', () => {

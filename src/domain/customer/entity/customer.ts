@@ -1,19 +1,16 @@
+import Entity from '../../@shared/entity/abstract.entity';
 import Address from '../valueObject/address';
 
-export default class Customer {
+export default class Customer extends Entity {
+  private _name: string;
   private _address?: Address;
   private _isActive = false;
   private _rewardPoints = 0;
 
-  constructor(
-    private _id: string,
-    private _name: string,
-  ) {
+  constructor(id: string, name: string) {
+    super(id);
+    this._name = name;
     this.validate();
-  }
-
-  get id() {
-    return this._id;
   }
 
   get name() {
@@ -59,11 +56,25 @@ export default class Customer {
 
   private validate() {
     if (!this.id || this._id.length === 0) {
-      throw new Error('Id is required');
+      this.notification.addNotification({
+        context: this.constructor.name,
+        message: 'Id is required',
+      });
     }
 
     if (!this.name || this._name.length === 0) {
-      throw new Error('Name is required');
+      this.notification.addNotification({
+        context: this.constructor.name,
+        message: 'Name is required',
+      });
     }
+
+    console.log({
+      constructor: this.constructor.name,
+      messages: this.notification.getMessages(),
+    });
+
+    if (this.notification.hasNotifications())
+      throw new Error(this.notification.getMessages(this.constructor.name));
   }
 }
