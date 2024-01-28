@@ -1,4 +1,5 @@
 import Entity from '../../@shared/entity/abstract.entity';
+import ProductValidatorFactory from '../factory/product.validator.factory';
 import IProduct from './product.interface';
 
 export default class Product extends Entity implements IProduct {
@@ -31,26 +32,7 @@ export default class Product extends Entity implements IProduct {
   }
 
   private validate() {
-    if (!this._id || this._id.length === 0) {
-      this.notification.addNotification({
-        context: this.constructor.name,
-        message: 'Id is required',
-      });
-    }
-
-    if (!this._name || this._name.length === 0) {
-      this.notification.addNotification({
-        context: this.constructor.name,
-        message: 'Name is required',
-      });
-    }
-
-    if (!this._price || this._price < 0) {
-      this.notification.addNotification({
-        context: this.constructor.name,
-        message: 'Price must be greater or equal than 0',
-      });
-    }
+    ProductValidatorFactory.create().validate(this);
 
     if (this.notification.hasNotifications()) {
       throw new Error(this.notification.getMessages(this.constructor.name));
