@@ -1,4 +1,5 @@
 import Entity from '../../@shared/entity/abstract.entity';
+import CustomerValidatorFactory from '../factory/customer.validator.factory';
 import Address from '../valueObject/address';
 
 export default class Customer extends Entity {
@@ -55,24 +56,7 @@ export default class Customer extends Entity {
   }
 
   private validate() {
-    if (!this.id || this._id.length === 0) {
-      this.notification.addNotification({
-        context: this.constructor.name,
-        message: 'Id is required',
-      });
-    }
-
-    if (!this.name || this._name.length === 0) {
-      this.notification.addNotification({
-        context: this.constructor.name,
-        message: 'Name is required',
-      });
-    }
-
-    console.log({
-      constructor: this.constructor.name,
-      messages: this.notification.getMessages(),
-    });
+    CustomerValidatorFactory.create().validate(this);
 
     if (this.notification.hasNotifications())
       throw new Error(this.notification.getMessages(this.constructor.name));
